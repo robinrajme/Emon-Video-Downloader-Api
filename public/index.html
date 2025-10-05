@@ -91,7 +91,7 @@
 
 <script>
 (function(){
-  const API_BASE = "https://emon-video-downloader.onrender.com/alldown?url=";
+  const API_BASE = "https://emon-video-downloader.onrender.com/alldown?url="; // ✅ fixed absolute API URL
   const input = document.getElementById('inputUrl');
   const btn = document.getElementById('btnGo');
   const status = document.getElementById('status');
@@ -103,28 +103,6 @@
   const playerWrap = document.getElementById('playerWrap');
   const videoPlayer = document.getElementById('videoPlayer');
   const errorBox = document.getElementById('errorBox');
-
-  // Auto paste detection: if user copies a link, paste it automatically (mobile friendly)
-  window.addEventListener('paste', (e)=>{
-    try{
-      const txt = (e.clipboardData || window.clipboardData).getData('text');
-      if(txt && txt.includes('http')) input.value = txt.trim();
-    }catch(e){}
-  });
-
-  // Also try to detect copied link every 1.2s for mobile (lightweight)
-  let lastClipboard = '';
-  setInterval(async ()=>{
-    if(navigator.clipboard && document.visibilityState === 'visible'){
-      try{
-        const text = await navigator.clipboard.readText();
-        if(text && text!==lastClipboard && text.includes('http') && !input.value){
-          lastClipboard = text;
-          input.value = text.trim();
-        }
-      }catch(e){}
-    }
-  }, 1200);
 
   btn.addEventListener('click', fetchData);
   input.addEventListener('keyup', (e)=>{ if(e.key==='Enter') fetchData(); });
@@ -138,100 +116,61 @@
     status.innerHTML = '<div class="pulse muted">⏳ Fetching — please wait...</div>';
 
     try{
-      const res = await fetch("/alldown?url=" + encodeURIComponent(url));
+      const res = await fetch(API_BASE + encodeURIComponent(url)); // ✅ fixed API call
       const data = await res.json();
 
       status.innerHTML='';
-      // data shape may vary. try multiple options:
-      // nayan-style: { status:true, title, thumbnail, url: [ {url,quality,ext}, ... ] }
-      // proxy-style: data.data etc.
+
       let urls = [];
-      let title = (data.title || data.name || '') ;
+      let title = data.title || data.name || '';
       let thumb = data.thumbnail || data.thumb || data.image || '';
-      // common alternate containers:
-      if(Array.isArray(data.url) && data.url.length) urls = data.url;
-      else if(Array.isArray(data.video) && data.video.length) urls = data.video;
-      else if(Array.isArray(data.data) && data.data.length){
-        // some proxies put array of objects with url inside
-        // try to flatten
-        urls = data.data.map(x => (x.url || x.link || x.download) ? x : null).filter(Boolean);
-      } else if(data.result && Array.isArray(data.result)) urls = data.result;
-
-      // fallback: if nayan returns {status:true, url: [ {url:..} ]} else try data.data[0].url etc
-      if(!urls.length && data.data && Array.isArray(data.data)){
-        // maybe each item is {url: '...', quality:'...'}
-        const flat = [];
-        data.data.forEach(item=>{
-          if(item.url) flat.push(item);
-          else if(item.download) flat.push({url:item.download, quality:item.quality||'', ext:item.ext||''});
-        });
-        if(flat.length) urls = flat;
-      }
-
-      if(!urls.length){
-        // sometimes the structure is: {status:true, video:[{url:...,quality:...}]}
-        if(data.video && Array.isArray(data.video) && data.video.length) urls = data.video;
-      }
+      if(Array.isArray(data.url)) urls = data.url;
+      else if(Array.isArray(data.video)) urls = data.video;
+      else if(data.result && Array.isArray(data.result)) urls = data.result;
 
       if(!urls.length){
         showError("No downloadable video found for this URL.");
         return;
       }
 
-      // show thumbnail & title
       thumbImg.src = thumb || '';
       videoTitle.textContent = title || 'Untitled Video';
       videoDesc.textContent = url;
       resultArea.classList.remove('hidden');
 
-      // choose best playable mp4 url for in-page player (prefer highest quality with .mp4)
-      let playable = null;
-      for(const u of urls){
-        const uurl = u.url || u.link || u.download || '';
-        if(!uurl) continue;
-        const lower = uurl.toLowerCase();
-        if(lower.endsWith('.mp4') || lower.includes('.mp4')) { playable = uurl; break; }
-      }
-      // fallback first url
-      if(!playable) playable = urls[0].url || urls[0].link || urls[0].download || '';
-
-      // if playable looks like m3u8, show note but still set source (many mobile players may not play)
+      let playable = urls.find(v => (v.url||'').includes('.mp4'))?.url || urls[0].url;
       if(playable){
         videoPlayer.src = playable;
         playerWrap.style.display = 'block';
-      } else {
-        playerWrap.style.display = 'none';
       }
 
-      // render download links (unique and sorted by quality if available)
       linksWrap.innerHTML = '';
-      const seen = new Set();
-      urls.forEach((u, idx)=>{
-        const uurl = u.url || u.link || u.download || '';
-        if(!uurl || seen.has(uurl)) return;
-        seen.add(uurl);
-        const q = u.quality || u.qualityLabel || u.label || `Link ${idx+1}`;
-        const ext = u.ext || u.format || (uurl.split('.').pop().split('?')[0]) || '';
-        const node = document.createElement('div');
-        node.className = 'link';
-        node.innerHTML = `<a href="${uurl}" target="_blank" rel="noopener noreferrer">📥 ${q} ${ext? '('+ext+')': ''}</a>
-                          <div class="muted">${Math.round((u.size||0)/1024)||''} KB</div>`;
-        // add "Play" small button if playable differs
-        if(uurl === playable) {
-          node.querySelector('a').textContent = `▶ Play & Download (${q})`;
-        }
-        linksWrap.appendChild(node);
+      urls.forEach((v, i)=>{
+        const u = v.url;
+        const q = v.quality || `Link ${i+1}`;
+        const ext = v.ext || 'mp4';
+        const div = document.createElement('div');
+        div.className = 'link';
+        div.innerHTML = `<a href="${u}" target="_blank" rel="noopener">📥 ${q} (${ext})</a>`;
+        linksWrap.appendChild(div);
       });
 
     }catch(err){
       status.innerHTML='';
+      showError("Failed to connect API or parse data.");
       console.error(err);
-      showError("Failed to contact API or parse response.");
     }
   }
 
   function showError(msg){
-    errorBox.textContent = msg; errorBox.classList.remove('hidden');
+    errorBox.textContent = msg;
+    errorBox.classList.remove('hidden');
+  }
+})();
+</script>
+</body>
+</html>
+Content = msg; errorBox.classList.remove('hidden');
   }
 
 })();
