@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 Emon Video Downloader</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+</head>
+<body class="bg-black text-white flex flex-col items-center justify-center min-h-screen">
+  <h1 class="text-4xl font-bold mb-6 text-green-400 animate-pulse">🎥 Emon Video Downloader</h1>
+  <input id="videoUrl" type="text" placeholder="Paste your video link here..." class="w-80 p-2 rounded text-black">
+  <button onclick="downloadVideo()" class="mt-4 bg-green-500 px-4 py-2 rounded hover:bg-green-600">Download</button>
+  
+  <div id="result" class="mt-6"></div>
+
+  <footer class="mt-12 text-gray-400 text-sm">
+    By <a href="https://mremon.bio.link/" target="_blank" class="text-green-400 hover:underline">Emon Hawladar</a>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
