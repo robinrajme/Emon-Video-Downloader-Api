@@ -138,8 +138,7 @@
     status.innerHTML = '<div class="pulse muted">⏳ Fetching — please wait...</div>';
 
     try{
-      // call your API
-      const res = await fetch(API_BASE + encodeURIComponent(url));
+      const res = await fetch("/alldown?url=" + encodeURIComponent(url));
       const data = await res.json();
 
       status.innerHTML='';
