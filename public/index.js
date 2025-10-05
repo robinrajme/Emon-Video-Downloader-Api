@@ -10,7 +10,7 @@ async function downloadVideo() {
 
   try {
     resultDiv.innerHTML = "<p class='text-yellow-400'>⏳ Processing your request...</p>";
-    const apiUrl = `https://emon-video-downloader.onrender.com/alldown?url=${encodeURIComponent(url)}`;
+    const apiUrl = `https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`;
     const res = await fetch(apiUrl);
     const data = await res.json();
 
