@@ -46,7 +46,7 @@
     <input id="videoUrl" type="text" placeholder="🔗 Paste your video link here..." 
            class="w-full p-3 rounded-lg input-box focus:outline-none">
     <button onclick="downloadVideo()" class="btn w-full p-3 rounded-lg mt-4">
-      ᴅᴏᴡɴʟᴏᴀᴅᴇʀ
+      🚀 ᴅᴏᴡɴʟᴏᴀᴅ
     </button>
 
     <div id="result" class="mt-6 text-center text-gray-300"></div>
@@ -75,24 +75,27 @@
         const res = await fetch(apiUrl);
         const data = await res.json();
 
-        if (data.error) throw new Error(data.error);
+        if (data.error || !data.url) throw new Error(data.error || "No video found");
 
         let output = "<div class='mt-4 text-left bg-gray-900 p-4 rounded-lg border border-green-400'>";
-        output += "<h2 class='text-green-400 text-xl mb-3 font-semibold'>✅ Download Links:</h2>";
-
-        if (data.video && data.video.length > 0) {
-          data.video.forEach(v => {
-            output += `
-              <div class='mb-2'>
-                <a href="${v.url}" target="_blank" 
-                   class="block text-blue-400 hover:text-blue-300 underline">
-                   🎞 ${v.quality || 'Download'} (${v.ext || ''})
-                </a>
-              </div>`;
-          });
-        } else {
-          output += "<p class='text-gray-400'>No video found.</p>";
+        if (data.thumbnail) {
+          output += `<img src="${data.thumbnail}" alt="thumbnail" class="rounded-lg mb-3">`;
         }
+        if (data.title) {
+          output += `<h2 class='text-green-400 text-lg font-semibold mb-2'>🎞 ${data.title}</h2>`;
+        }
+
+        output += "<h3 class='text-green-300 text-md mb-3'>✅ Download Links:</h3>";
+
+        data.url.forEach(v => {
+          output += `
+            <div class='mb-2'>
+              <a href="${v.url}" target="_blank" 
+                 class="block text-blue-400 hover:text-blue-300 underline">
+                 📥 ${v.quality || 'Download'} (${v.ext || ''})
+              </a>
+            </div>`;
+        });
 
         output += "</div>";
         resultDiv.innerHTML = output;
