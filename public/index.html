@@ -7,60 +7,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg1:#050506; --bg2:#0b0b0c; --accent:#00ff88; --muted:#9aa3a3;
-  }
+  :root{--bg1:#050506;--bg2:#0b0b0c;--accent:#00ff88;--muted:#9aa3a3;}
   *{box-sizing:border-box}
-  body{
-    margin:0; font-family:'Poppins',sans-serif;
-    background: radial-gradient(circle at 10% 10%, #071018, #000);
-    color:#eee; -webkit-font-smoothing:antialiased;
-    display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px;
-  }
-  .card{
-    width:100%; max-width:760px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3));
-    border-radius:14px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,0.6); border:1px solid rgba(0,255,136,0.08)
-  }
-  h1{margin:0 0 8px; color:var(--accent); letter-spacing:1px}
-  .sub{color:var(--muted); margin-bottom:14px}
-  .row{display:flex; gap:12px}
-  input[type="text"]{
-    flex:1; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
-    background:#0e0e0f; color:#dfffe8; outline:none; font-size:15px;
-  }
-  button{
-    background:linear-gradient(90deg,#00ff88,#00c8ff); border:none; padding:0 16px; border-radius:10px; min-width:140px;
-    color:#002226; font-weight:700; cursor:pointer; font-size:15px;
-  }
-  .info{margin-top:14px; display:flex; gap:12px; align-items:flex-start}
-  .thumb{width:160px; height:90px; background:#111; border-radius:8px; overflow:hidden; flex-shrink:0}
-  .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+  body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at 10% 10%,#071018,#000);
+  color:#eee;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+  .card{width:100%;max-width:760px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.3));
+  border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(0,255,136,0.08)}
+  h1{margin:0 0 8px;color:var(--accent);letter-spacing:1px}
+  .sub{color:var(--muted);margin-bottom:14px}
+  .row{display:flex;gap:12px}
+  input[type="text"]{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);
+  background:#0e0e0f;color:#dfffe8;outline:none;font-size:15px;}
+  button{background:linear-gradient(90deg,#00ff88,#00c8ff);border:none;padding:0 16px;border-radius:10px;min-width:140px;
+  color:#002226;font-weight:700;cursor:pointer;font-size:15px;}
+  .info{margin-top:14px;display:flex;gap:12px;align-items:flex-start}
+  .thumb{width:160px;height:90px;background:#111;border-radius:8px;overflow:hidden;flex-shrink:0}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .meta{flex:1}
-  .title{font-weight:700; color:#cffff0}
-  .meta .small{color:var(--muted); margin-top:6px}
-  .player{width:100%; margin-top:12px; background:#000; border-radius:8px; overflow:hidden; display:none}
-  video{width:100%; height:auto; display:block; background:#000}
+  .title{font-weight:700;color:#cffff0}
+  .meta .small{color:var(--muted);margin-top:6px}
+  .player{width:100%;margin-top:12px;background:#000;border-radius:8px;overflow:hidden;display:none}
+  video{width:100%;height:auto;display:block;background:#000}
   .links{margin-top:12px}
-  .link{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:rgba(0,255,136,0.03); border-radius:8px; margin-bottom:8px; border:1px solid rgba(0,255,136,0.04)}
-  .link a{color:#cffff0; text-decoration:none; font-weight:600}
-  .muted{color:var(--muted); font-size:13px}
-  .center{display:flex; align-items:center; justify-content:center}
+  .link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;background:rgba(0,255,136,0.03);
+  border-radius:8px;margin-bottom:8px;border:1px solid rgba(0,255,136,0.04)}
+  .link a{color:#cffff0;text-decoration:none;font-weight:600}
+  .muted{color:var(--muted);font-size:13px}
+  .center{display:flex;align-items:center;justify-content:center}
   .pulse{animation:pulse 1.2s infinite}
   @keyframes pulse{0%{opacity:1}50%{opacity:0.5}100%{opacity:1}}
-  footer{margin-top:16px; text-align:center; color:var(--muted); font-size:13px}
-  footer a{color:var(--accent); text-decoration:none; font-weight:600}
+  footer{margin-top:16px;text-align:center;color:var(--muted);font-size:13px}
+  footer a{color:var(--accent);text-decoration:none;font-weight:600}
   .hidden{display:none}
-  .error{color:#ff7070; font-weight:600}
-  @media(max-width:640px){
-    .row{flex-direction:column}
-    .thumb{width:120px; height:72px}
-  }
+  .error{color:#ff7070;font-weight:600}
+  @media(max-width:640px){.row{flex-direction:column}.thumb{width:120px;height:72px}}
 </style>
 </head>
 <body>
   <div class="card">
     <h1>ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ</h1>
-    <div class="sub">Paste a TikTok / Facebook / Instagram link — play & download. By <a href="https://mremon.bio.link/" target="_blank" style="color:var(--accent); text-decoration:none">EMon</a></div>
+    <div class="sub">Paste a TikTok / Facebook / Instagram link — play & download. By 
+      <a href="https://mremon.bio.link/" target="_blank" style="color:var(--accent);text-decoration:none">EMon</a></div>
 
     <div class="row">
       <input id="inputUrl" type="text" placeholder="Paste video link here (example: https://vt.tiktok.com/...)">
@@ -68,7 +55,6 @@
     </div>
 
     <div id="status" class="center" style="margin-top:12px"></div>
-
     <div id="resultArea" class="hidden">
       <div class="info">
         <div class="thumb" id="thumbBox"><img id="thumbImg" src="" alt="thumbnail"></div>
@@ -80,18 +66,16 @@
           </div>
         </div>
       </div>
-
       <div class="links" id="linksWrap"></div>
     </div>
 
     <div id="errorBox" class="hidden error" style="margin-top:12px"></div>
-
     <footer>Built by <a href="https://mremon.bio.link/" target="_blank">EMON HAWLADAR</a></footer>
   </div>
 
 <script>
 (function(){
-  const API_BASE = "https://emon-video-downloader.onrender.com/alldown?url="; // ✅ fixed absolute API URL
+  const API_BASE = "https://emon-video-downloader.onrender.com/alldown?url=";
   const input = document.getElementById('inputUrl');
   const btn = document.getElementById('btnGo');
   const status = document.getElementById('status');
@@ -104,75 +88,81 @@
   const videoPlayer = document.getElementById('videoPlayer');
   const errorBox = document.getElementById('errorBox');
 
-  btn.addEventListener('click', fetchData);
-  input.addEventListener('keyup', (e)=>{ if(e.key==='Enter') fetchData(); });
+  window.addEventListener('paste', (e)=>{
+    try{
+      const txt=(e.clipboardData||window.clipboardData).getData('text');
+      if(txt&&txt.includes('http')) input.value=txt.trim();
+    }catch(e){}
+  });
+
+  let lastClipboard='';
+  setInterval(async ()=>{
+    if(navigator.clipboard&&document.visibilityState==='visible'){
+      try{
+        const text=await navigator.clipboard.readText();
+        if(text&&text!==lastClipboard&&text.includes('http')&&!input.value){
+          lastClipboard=text; input.value=text.trim();
+        }
+      }catch(e){}
+    }
+  },1200);
+
+  btn.addEventListener('click',fetchData);
+  input.addEventListener('keyup',(e)=>{if(e.key==='Enter')fetchData();});
 
   async function fetchData(){
-    const url = input.value.trim();
-    errorBox.classList.add('hidden'); errorBox.textContent='';
-    if(!url){ showError("Please paste a valid video URL."); return; }
-
-    resultArea.classList.add('hidden'); linksWrap.innerHTML=''; playerWrap.style.display='none';
-    status.innerHTML = '<div class="pulse muted">⏳ Fetching — please wait...</div>';
-
+    const url=input.value.trim();
+    errorBox.classList.add('hidden');errorBox.textContent='';
+    if(!url){showError("Please paste a valid video URL.");return;}
+    resultArea.classList.add('hidden');linksWrap.innerHTML='';playerWrap.style.display='none';
+    status.innerHTML='<div class="pulse muted">⏳ Fetching — please wait...</div>';
     try{
-      const res = await fetch(API_BASE + encodeURIComponent(url)); // ✅ fixed API call
-      const data = await res.json();
-
+      // ✅ fixed line here
+      const res=await fetch(API_BASE+encodeURIComponent(url));
+      const data=await res.json();
       status.innerHTML='';
-
-      let urls = [];
-      let title = data.title || data.name || '';
-      let thumb = data.thumbnail || data.thumb || data.image || '';
-      if(Array.isArray(data.url)) urls = data.url;
-      else if(Array.isArray(data.video)) urls = data.video;
-      else if(data.result && Array.isArray(data.result)) urls = data.result;
-
-      if(!urls.length){
-        showError("No downloadable video found for this URL.");
-        return;
+      let urls=[];let title=(data.title||data.name||'');let thumb=data.thumbnail||data.thumb||data.image||'';
+      if(Array.isArray(data.url)&&data.url.length)urls=data.url;
+      else if(Array.isArray(data.video)&&data.video.length)urls=data.video;
+      else if(Array.isArray(data.data)&&data.data.length){
+        urls=data.data.map(x=>(x.url||x.link||x.download)?x:null).filter(Boolean);
+      }else if(data.result&&Array.isArray(data.result))urls=data.result;
+      if(!urls.length&&data.data&&Array.isArray(data.data)){
+        const flat=[];data.data.forEach(item=>{
+          if(item.url)flat.push(item);
+          else if(item.download)flat.push({url:item.download,quality:item.quality||'',ext:item.ext||''});
+        });
+        if(flat.length)urls=flat;
       }
-
-      thumbImg.src = thumb || '';
-      videoTitle.textContent = title || 'Untitled Video';
-      videoDesc.textContent = url;
+      if(!urls.length&&data.video&&Array.isArray(data.video)&&data.video.length)urls=data.video;
+      if(!urls.length){showError("No downloadable video found for this URL.");return;}
+      thumbImg.src=thumb||'';videoTitle.textContent=title||'Untitled Video';videoDesc.textContent=url;
       resultArea.classList.remove('hidden');
-
-      let playable = urls.find(v => (v.url||'').includes('.mp4'))?.url || urls[0].url;
-      if(playable){
-        videoPlayer.src = playable;
-        playerWrap.style.display = 'block';
+      let playable=null;
+      for(const u of urls){
+        const uurl=u.url||u.link||u.download||'';if(!uurl)continue;
+        const lower=uurl.toLowerCase();
+        if(lower.endsWith('.mp4')||lower.includes('.mp4')){playable=uurl;break;}
       }
-
-      linksWrap.innerHTML = '';
-      urls.forEach((v, i)=>{
-        const u = v.url;
-        const q = v.quality || `Link ${i+1}`;
-        const ext = v.ext || 'mp4';
-        const div = document.createElement('div');
-        div.className = 'link';
-        div.innerHTML = `<a href="${u}" target="_blank" rel="noopener">📥 ${q} (${ext})</a>`;
-        linksWrap.appendChild(div);
+      if(!playable)playable=urls[0].url||urls[0].link||urls[0].download||'';
+      if(playable){videoPlayer.src=playable;playerWrap.style.display='block';}
+      else{playerWrap.style.display='none';}
+      linksWrap.innerHTML='';const seen=new Set();
+      urls.forEach((u,idx)=>{
+        const uurl=u.url||u.link||u.download||'';if(!uurl||seen.has(uurl))return;seen.add(uurl);
+        const q=u.quality||u.qualityLabel||u.label||`Link ${idx+1}`;
+        const ext=u.ext||u.format||(uurl.split('.').pop().split('?')[0])||'';
+        const node=document.createElement('div');node.className='link';
+        node.innerHTML=`<a href="${uurl}" target="_blank" rel="noopener noreferrer">📥 ${q} ${ext? '('+ext+')':''}</a>
+        <div class="muted">${Math.round((u.size||0)/1024)||''} KB</div>`;
+        if(uurl===playable){node.querySelector('a').textContent=`▶ Play & Download (${q})`;}
+        linksWrap.appendChild(node);
       });
-
     }catch(err){
-      status.innerHTML='';
-      showError("Failed to connect API or parse data.");
-      console.error(err);
+      status.innerHTML='';console.error(err);showError("Failed to contact API or parse response.");
     }
   }
-
-  function showError(msg){
-    errorBox.textContent = msg;
-    errorBox.classList.remove('hidden');
-  }
-})();
-</script>
-</body>
-</html>
-Content = msg; errorBox.classList.remove('hidden');
-  }
-
+  function showError(msg){errorBox.textContent=msg;errorBox.classList.remove('hidden');}
 })();
 </script>
 </body>
